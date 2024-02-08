@@ -6,7 +6,7 @@
 
 
 
-A rust client for the [Exa](https://exa.ai/search) / metaphor systems search. 
+A rust client for the [Exa](https://exa.ai/search) / metaphor systems search API. 
 
 
 It was made using the following the API documentation https://docs.exa.ai/reference/contents
@@ -19,6 +19,11 @@ It was made using the following the API documentation https://docs.exa.ai/refere
 ```
 [dependencies]
 exa_api_client = "0.1.0" 
+```
+### Or use cargo add  
+
+```
+cargo add exa_api_client
 ```
 
 ### To use you need an api key from https://docs.exa.ai/reference/getting-an-api-key 
