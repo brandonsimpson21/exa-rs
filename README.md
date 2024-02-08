@@ -1,7 +1,8 @@
 # Exa-rs
 
 
-A rust client for the ![Exa](https://exa.ai/search) / metaphor systems search. 
+A rust client for the [Exa](https://exa.ai/search) / metaphor systems search. 
+
 
 It was made using the following the API documentation https://docs.exa.ai/reference/contents
 
