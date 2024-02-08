@@ -18,7 +18,7 @@ It was made using the following the API documentation https://docs.exa.ai/refere
 
 ```
 [dependencies]
-exa_api_client = "0.1.1" 
+exa_api_client = "0.1.2" 
 ```
 ### Or use cargo add  
 
