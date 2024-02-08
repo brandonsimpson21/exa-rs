@@ -29,7 +29,7 @@ cargo add exa_api_client
 ### To use you need an api key from https://docs.exa.ai/reference/getting-an-api-key 
  
  ```
-use crate::exa_api_client::{ExaApiClient,SearchParams,CommonRequestOptions,FindSimilarParams,ContentsRequest,ContentsParams,TextOptions,HighlightsOptions};
+use exa_api_client::{ExaApiClient,SearchParams,CommonRequestOptions,FindSimilarParams,ContentsRequest,ContentsParams,TextOptions,HighlightsOptions};
 
 #[tokio::main]
 async fn main() {
@@ -69,6 +69,7 @@ async fn main() {
 match client.search(search_params).await {
     Ok(json_string) => println!("{}", json_string),
     Err(e) => eprintln!("Error: {:?}", e),
+}
 }
 ```
 
@@ -124,7 +125,6 @@ match client.contents(contents_params).await {
     Err(e) => eprintln!("Error occurred: {:?}", e),
 }
 
-}
 ```
 
 

@@ -128,6 +128,20 @@ dependencies = [
 name = "exa_api_client"
 version = "0.1.0"
 dependencies = [
+ "exa_api_client 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "reqwest",
+ "serde",
+ "serde_json",
+ "thiserror",
+ "tokio",
+]
+
+[[package]]
+name = "exa_api_client"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "920305e3bfe1cde5473d08a235cd3fa95ee38908b2270e46064af761012a6499"
+dependencies = [
  "reqwest",
  "serde",
  "serde_json",
