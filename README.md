@@ -1,5 +1,10 @@
 # Exa-rs
 
+![Crates.io Version](https://img.shields.io/crates/v/exa_api_client)
+![Crates.io Total Downloads](https://img.shields.io/crates/d/exa_api_client)
+![Crates.io License](https://img.shields.io/crates/l/exa_api_client)
+
+
 
 A rust client for the [Exa](https://exa.ai/search) / metaphor systems search. 
 
