@@ -4,6 +4,8 @@ use thiserror::Error;
 use serde_json::json;
 
 
+
+//implement keyword search
 #[derive(Debug, Error)]
 pub enum ExaApiError {
     #[error("network error: {0}")]
@@ -43,6 +45,7 @@ pub struct ContentsRequest {
     pub end_published_date: Option<String>,
 }
 
+//right now search is only neural 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct SearchParams {
     pub query: String,
@@ -64,8 +67,11 @@ pub struct FindSimilarParams {
 }
 
 #[derive(Serialize, Deserialize, Debug)]
-struct ContentsParams {
-    ids: Vec<String>,
+pub struct ContentsParams {
+    pub ids: Vec<String>,
+    pub text: Option<TextOptions>,
+    pub highlights: Option<HighlightsOptions>,
+
 }
 
 pub struct ExaApiClient {
@@ -112,7 +118,7 @@ impl ExaApiClient {
             let json_string = response.text().await.map_err(|e| ExaApiError::NetworkError(e))?;
             Ok(json_string)
         } else {
-            let error_msg = response.text().await.unwrap_or_else(|_| "Unknown error".to_string());
+            let error_msg: String = response.text().await.unwrap_or_else(|_| "Unknown error".to_string());
             Err(ExaApiError::ApiError(error_msg))
         }
     }
