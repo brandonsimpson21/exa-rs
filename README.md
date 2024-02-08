@@ -60,7 +60,10 @@ match client.search(search_params).await {
     Ok(json_string) => println!("{}", json_string),
     Err(e) => eprintln!("Error: {:?}", e),
 }
+```
 
+### Find similar 
+```
 
 // Find similar example using contents object 
 let find_similar_params = FindSimilarParams {
@@ -86,7 +89,10 @@ match client.find_similar(find_similar_params).await {
     },
     Err(e) => eprintln!("Error occurred: {:?}", e),
 }
+```
 
+### Get contents
+```
 // The get contents api endpoint
 let contents_params = ContentsParams {
     ids: vec!["kOYHjR-2wEIOZc9Nv4bUHQ".to_string()], 
