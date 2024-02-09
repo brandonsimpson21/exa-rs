@@ -5,7 +5,7 @@ use crate::api::{ExaApiClient,SearchParamsBuilder,CommonRequestOptions,FindSimil
 
 #[tokio::main]
 async fn main() {
-    let api_key = "b1d8f567-ab4e-44cc-b9d1-f56ca32a14ae".to_string();
+    let api_key = "".to_string();
     let client = ExaApiClient::new(api_key);
 /* 
     let contents_params = ContentsParamsBuilder::new(vec!["kOYHjR-2wEIOZc9Nv4bUHQ".to_string()])
