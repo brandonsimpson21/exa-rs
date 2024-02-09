@@ -64,7 +64,6 @@ async fn main() {
 
     match client.find_similar(find_similar_params).await {
         Ok(response) => {
-            // Pretty-print the JSON response
             let formatted_response = serde_json::to_string_pretty(&response).unwrap_or_else(|_| "Failed to format response".to_string());
             println!("Find Similar Response: {}", formatted_response);
         },
