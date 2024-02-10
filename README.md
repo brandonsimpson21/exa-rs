@@ -115,13 +115,7 @@ let contents_params = ContentsParamsBuilder::new(vec!["kOYHjR-2wEIOZc9Nv4bUHQ".t
         .build();
 
     match client.contents(contents_params).await {
-        Ok(response) => {
-            let parsed_json: serde_json::Value = serde_json::from_str(&response)
-                .expect("Failed to parse JSON");
-            let pretty_json = serde_json::to_string_pretty(&parsed_json)
-                .expect("Failed to convert to pretty JSON");
-            println!("Contents Response: {}", pretty_json);
-        },
+        Ok(response) => println!("Contents Response: {:?}", response), // Use {:?} for debug formatting
         Err(e) => eprintln!("Error: {:?}", e),
     }
 ```
