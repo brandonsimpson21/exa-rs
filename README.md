@@ -130,7 +130,17 @@ let contents_params = ContentsParamsBuilder::new(vec!["kOYHjR-2wEIOZc9Nv4bUHQ".t
 ### Example Search response 
 
 ```
-Search Response: SearchResponse { results: [ResponseResult { title: Some("Mitski Miyawaki"), url: "https://mitski.fandom.com/wiki/Mitski_Miyawaki", published_date: None, author: None, id: "wx0YdyyQyjKZpim7m9kcFQ", score: Some(0.19030162692070007), text: Some(" \n\t\n\t \nMitski Miyawaki, known professionally as Mitski, born Mitsuki Laycock, was born on September 27, 1990 in the Mie prefecture of Japan.  [1]   [2]   Before settling in the United States, Mitski lived in thirteen countries, including (but not limited to) China, Malaysia, Turkey, and the Democratic Republic of Congo. She refers to herself as \"half Japanese, half American but not fully either.\" While attending Purchase College's Conservatory of Music to study studio composition, Mitski self-released her first two albums, Lush (2012) and Retired from Sad, New Career in Business (2013). Her senior project at Purchase originally involved the creation of these albums. Bury Me at Makeout Creek, her third studio album, was made available in 2014 via Double Double Whammy after she graduated. Her critically acclaimed albums Puberty 2 (2016), Be the Cowboy (2018), and Laurel Hell (2022), the latter of which reached the top ten in multiple countries, were then published when she signed with De"), highlights: Some([" She then joined the prog-rock band Voice Coils as a vocalist while working on  Bury Me at Makeout Creek , released on Double Double Whammy as her first album on any record label.  She signed to the label Dead Oceans in 2016, and has gone on to release  Puberty 2  and Be the Cowboy, both to critical acclaim. In 2019 Mitski announced a hiatus from music and went on to explain on Twitter:  \"Y'all, I'm not quitting music! Me?"]), highlight_scores: None }], autoprompt_string: None }
+Search Response: SearchResponse { results: 
+[ResponseResult { title: Some("Mitski Miyawaki"), 
+url: "https://mitski.fandom.com/wiki/Mitski_Miyawaki", published_date: None, author: None, id: "wx0YdyyQyjKZpim7m9kcFQ", score: Some(0.19030162692070007), text: Some(" \n\t\n\t \nMitski Miyawaki, known professionally as Mitski, born Mitsuki Laycock, was born on September 27,
+ 1990 in the Mie prefecture of Japan.  [1]   [2]   Before settling in the United States, Mitski lived in thirteen countries, including (but not limited to) China, Malaysia, Turkey, and the Democratic Republic of Congo. She refers to herself as 
+ \"half Japanese, half American but not fully either.\"
+ While attending Purchase College's Conservatory of Music to study studio composition, Mitski self-released her first two albums, Lush (2012) and Retired from Sad, New Career in Business (2013). Her senior project at Purchase originally involved the creation of these albums.
+  Bury Me at Makeout Creek, her third studio album, was made available in 2014 via Double Double Whammy after she graduated. Her critically acclaimed albums Puberty 2 (2016),
+  Be the Cowboy (2018), and Laurel Hell (2022), the latter of which reached the top ten in multiple countries, were then published when she signed with De"), 
+  highlights: Some([" She then joined the prog-rock band Voice Coils as a vocalist while working on  Bury Me at Makeout Creek , released on Double Double Whammy as her first album on any record label.  She signed to the label Dead Oceans in 2016, and has gone on to release  Puberty 2 
+   and Be the Cowboy, both to critical acclaim. In 2019 Mitski announced a hiatus from music and went on to explain on Twitter:  \"Y'all, I'm not quitting music! Me?"]),
+   highlight_scores: None }], autoprompt_string: None }
 
 ```
 
