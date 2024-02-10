@@ -28,7 +28,7 @@ cargo add exa_api_client
 
 ### To use you need an api key from https://docs.exa.ai/reference/getting-an-api-key 
 
-#### Initialization
+### Initialization
 Start by creating an instance of the ExaApiClient with your API key:
  
  ```
