@@ -367,10 +367,10 @@ pub struct ExaApiClient {
 }
 
 impl ExaApiClient {
-    pub fn new(api_key: String) -> Self {
+    pub fn new(api_key:  &str) -> Self {
         ExaApiClient {
             base_url: "https://api.exa.ai".to_string(),
-            api_key,
+            api_key: api_key.to_string(),
             client: Client::new(),
         }
     }
