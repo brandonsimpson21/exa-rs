@@ -14,7 +14,7 @@ pub enum ExaApiError {
     ApiError(String),
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug,Default)]
 pub struct TextOptions {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub max_characters: Option<u32>,
@@ -22,14 +22,14 @@ pub struct TextOptions {
     pub include_html_tags: Option<bool>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug,Default)]
 pub struct HighlightsOptions {
     pub num_sentences: Option<u32>,
     pub highlights_per_url: Option<u32>,
     pub query: Option<String>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug,Default)]
 pub struct ContentsRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub text: Option<TextOptions>,
@@ -38,7 +38,7 @@ pub struct ContentsRequest {
 }
 
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug,Default)]
  pub struct CommonRequestOptions {
      num_results: Option<u32>,
      include_domains: Option<Vec<String>>,
@@ -46,45 +46,28 @@ pub struct ContentsRequest {
      start_crawl_date: Option<String>,
      end_crawl_date: Option<String>,
      start_published_date: Option<String>,
-    pub end_published_date: Option<String>,
+     end_published_date: Option<String>,
 }
 
-
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Default)]
 pub struct SearchParams {
-     query: String,
-     use_autoprompt: Option<bool>,
+    query: String,
+    use_autoprompt: Option<bool>,
     #[serde(flatten)]
-     common: Option<CommonRequestOptions>,
+    common: CommonRequestOptions,
     #[serde(skip_serializing_if = "Option::is_none")]
     contents: Option<ContentsRequest>,
     #[serde(rename = "type", skip_serializing_if = "Option::is_none")]
-    search_type: Option<String>,  // Include search_type as an optional field
-
-
+    search_type: Option<String>,
 }
+
 
 // fix the text 
 
-#[derive(Default)]
-pub struct SearchParamsBuilder {
-    query: String,
-    use_autoprompt: Option<bool>,
-    num_results: Option<u32>,
-    include_domains: Option<Vec<String>>,
-    exclude_domains: Option<Vec<String>>,
-    start_crawl_date: Option<String>,
-    end_crawl_date: Option<String>,
-    start_published_date: Option<String>,
-    end_published_date: Option<String>,
-    text: Option<TextOptions>,
-    highlights: Option<HighlightsOptions>,
-    search_type: Option<String>,  // Add search_type as an optional field
-}
 
-impl SearchParamsBuilder {
+impl SearchParams {
     pub fn new(query: &str) -> Self {
-        SearchParamsBuilder {
+        SearchParams {
             query: query.to_string(),
             ..Default::default()
         }
@@ -101,106 +84,80 @@ impl SearchParamsBuilder {
     }
 
     pub fn num_results(mut self, value: u32) -> Self {
-        self.num_results = Some(value);
+        self.common.num_results = Some(value);
         self
     }
 
     pub fn include_domains(mut self, domains: Vec<String>) -> Self {
-        self.include_domains = Some(domains);
+        self.common.include_domains = Some(domains);
         self
     }
 
     pub fn exclude_domains(mut self, domains: Vec<String>) -> Self {
-        self.exclude_domains = Some(domains);
+        self.common.exclude_domains = Some(domains);
         self
     }
 
     pub fn start_crawl_date(mut self, date: &str) -> Self {
-        self.start_crawl_date = Some(date.to_string());
+        self.common.start_crawl_date = Some(date.to_string());
         self
     }
 
     pub fn end_crawl_date(mut self, date: &str) -> Self {
-        self.end_crawl_date = Some(date.to_string());
+        self.common.end_crawl_date = Some(date.to_string());
         self
     }
 
     pub fn start_published_date(mut self, date: &str) -> Self {
-        self.start_published_date = Some(date.to_string());
+        self.common.start_published_date = Some(date.to_string());
         self
     }
 
     pub fn end_published_date(mut self, date: &str) -> Self {
-        self.end_published_date = Some(date.to_string());
+        self.common.end_published_date = Some(date.to_string());
         self
     }
 
-    pub fn text(mut self, options: TextOptions) -> Self {
-        self.text = Some(options);
+    pub fn text(mut self, max_characters: Option<u32>, include_html_tags: Option<bool>) -> Self {
+        let text = TextOptions {
+            max_characters,
+            include_html_tags,
+        };
+        self.contents.get_or_insert_with(Default::default).text = Some(text);
         self
     }
 
-    pub fn highlights(mut self, options: HighlightsOptions) -> Self {
-        self.highlights = Some(options);
+    pub fn highlights(mut self, num_sentences: Option<u32>, highlights_per_url: Option<u32>, query: Option<&str>) -> Self {
+        let query_str = query.map(|q| q.to_string());
+        let highlights = HighlightsOptions {
+            num_sentences,
+            highlights_per_url,
+            query: query_str,
+        };
+        self.contents.get_or_insert_with(Default::default).highlights = Some(highlights);
         self
     }
 
-    pub fn build(self) -> SearchParams {
-        SearchParams {
-            query: self.query,
-            use_autoprompt: self.use_autoprompt,
-            common: Some(CommonRequestOptions {
-                num_results: self.num_results,
-                include_domains: self.include_domains,
-                exclude_domains: self.exclude_domains,
-                start_crawl_date: self.start_crawl_date,
-                end_crawl_date: self.end_crawl_date,
-                start_published_date: self.start_published_date,
-                end_published_date: self.end_published_date,
-            }),
-            contents: Some(ContentsRequest{text: self.text,
-            highlights: self.highlights,}),
-            search_type: self.search_type.or(Some("neural".to_string())),  // Default to "neural" if not set
-
-        }
-    }
+  
 }
 
 // make each of these option::is_none
-#[derive(Serialize, Deserialize, Debug)]
+#[derive( Serialize,Deserialize, Debug,Default)]
 pub struct FindSimilarParams {
      url: String,
     #[serde(skip_serializing_if = "Option::is_none")]
      exclude_source_domain: Option<bool>,
     #[serde(flatten)]
-    #[serde(skip_serializing_if = "Option::is_none")]
-     common: Option<CommonRequestOptions>,
+     common: CommonRequestOptions,
     #[serde(skip_serializing_if = "Option::is_none")]
     contents: Option<ContentsRequest>,
 
 
 }
 
-
-// find similar 
-#[derive(Default)]
-pub struct FindSimilarParamsBuilder {
-    url: String,
-    exclude_source_domain: Option<bool>,
-    num_results: Option<u32>,
-    include_domains: Option<Vec<String>>,
-    exclude_domains: Option<Vec<String>>,
-    start_crawl_date: Option<String>,
-    end_crawl_date: Option<String>,
-    start_published_date: Option<String>,
-    end_published_date: Option<String>,
-    text: Option<TextOptions>,
-    highlights: Option<HighlightsOptions>,
-}
-
-impl FindSimilarParamsBuilder {
+impl FindSimilarParams {
     pub fn new(url: &str) -> Self {
-        FindSimilarParamsBuilder {
+        FindSimilarParams {
             url: url.to_string(),
             ..Default::default()
         }
@@ -212,74 +169,67 @@ impl FindSimilarParamsBuilder {
     }
 
     pub fn num_results(mut self, value: u32) -> Self {
-        self.num_results = Some(value);
+        self.common.num_results = Some(value);
         self
     }
 
     pub fn include_domains(mut self, domains: Vec<String>) -> Self {
-        self.include_domains = Some(domains);
+        self.common.include_domains = Some(domains);
         self
     }
 
     pub fn exclude_domains(mut self, domains: Vec<String>) -> Self {
-        self.exclude_domains = Some(domains);
+        self.common.exclude_domains = Some(domains);
         self
     }
 
     pub fn start_crawl_date(mut self, date: &str) -> Self {
-        self.start_crawl_date = Some(date.to_string());
+        self.common.start_crawl_date = Some(date.to_string());
         self
     }
 
     pub fn end_crawl_date(mut self, date: &str) -> Self {
-        self.end_crawl_date = Some(date.to_string());
+        self.common.end_crawl_date = Some(date.to_string());
         self
     }
 
     pub fn start_published_date(mut self, date: &str) -> Self {
-        self.start_published_date = Some(date.to_string());
+        self.common.start_published_date = Some(date.to_string());
         self
     }
 
     pub fn end_published_date(mut self, date: &str) -> Self {
-        self.end_published_date = Some(date.to_string());
+        self.common.end_published_date = Some(date.to_string());
         self
     }
 
 
-    pub fn text(mut self, options: TextOptions) -> Self {
-        self.text = Some(options);
+    pub fn text(mut self, max_characters: Option<u32>, include_html_tags: Option<bool>) -> Self {
+        let text = TextOptions {
+            max_characters,
+            include_html_tags,
+        };
+        self.contents.get_or_insert_with(Default::default).text = Some(text);
         self
     }
 
-    pub fn highlights(mut self, options: HighlightsOptions) -> Self {
-        self.highlights = Some(options);
+    pub fn highlights(mut self, num_sentences: Option<u32>, highlights_per_url: Option<u32>, query: Option<&str>) -> Self {
+        let query_str = query.map(|q| q.to_string());
+        let highlights = HighlightsOptions {
+            num_sentences,
+            highlights_per_url,
+            query: query_str,
+        };
+        self.contents.get_or_insert_with(Default::default).highlights = Some(highlights);
         self
     }
 
-    pub fn build(self) -> FindSimilarParams {
-        FindSimilarParams {
-            url: self.url,
-            exclude_source_domain: self.exclude_source_domain,
-            common: Some(CommonRequestOptions {
-                num_results: self.num_results,
-                include_domains: self.include_domains,
-                exclude_domains: self.exclude_domains,
-                start_crawl_date: self.start_crawl_date,
-                end_crawl_date: self.end_crawl_date,
-                start_published_date: self.start_published_date,
-                end_published_date: self.end_published_date,
-            }),
-           contents: Some(ContentsRequest{ text: self.text,
-            highlights: self.highlights,}),
-        }
-    }
 }
 
 
 
 // find contents 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug,Default)]
 pub struct ContentsParams {
     pub ids: Vec<String>,
     pub text: Option<TextOptions>,
@@ -287,37 +237,34 @@ pub struct ContentsParams {
 
 }
 
-#[derive(Default)]
-pub struct ContentsParamsBuilder {
-    ids: Vec<String>,
-    text: Option<TextOptions>,
-    highlights: Option<HighlightsOptions>,
-}
 
-impl ContentsParamsBuilder {
+impl ContentsParams {
     pub fn new(ids: Vec<String>) -> Self {
-        ContentsParamsBuilder {
+        ContentsParams {
             ids,
             ..Default::default()
         }
     }
 
-    pub fn text(mut self, text_options: TextOptions) -> Self {
-        self.text = Some(text_options);
+    pub fn text(mut self, max_characters: Option<u32>, include_html_tags: Option<bool>) -> Self {
+        let text = TextOptions {
+            max_characters,
+            include_html_tags,
+        };
+        self.text = Some(text);
         self
     }
 
-    pub fn highlights(mut self, highlights_options: HighlightsOptions) -> Self {
-        self.highlights = Some(highlights_options);
+    
+    pub fn highlights(mut self, num_sentences: Option<u32>, highlights_per_url: Option<u32>, query: Option<&str>) -> Self {
+        let query_str = query.map(|q| q.to_string());
+        let highlights = HighlightsOptions {
+            num_sentences,
+            highlights_per_url,
+            query: query_str,
+        };
+        self.highlights = Some(highlights);
         self
-    }
-
-    pub fn build(self) -> ContentsParams {
-        ContentsParams {
-            ids: self.ids,
-            text: self.text,
-            highlights: self.highlights,
-        }
     }
 }
 

@@ -1,3 +1,3 @@
 mod api;
 
-pub use crate::api::{ExaApiClient,SearchParamsBuilder,FindSimilarParamsBuilder,ContentsParamsBuilder,TextOptions,HighlightsOptions};
+pub use crate::api::{ExaApiClient,SearchParams,FindSimilarParams,ContentsParams};
