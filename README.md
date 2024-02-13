@@ -36,7 +36,7 @@ use exa_api_client::{ExaApiClient,SearchParams,FindSimilarParams,ContentsParams}
 
 #[tokio::main]
 async fn main() {
-    let api_key = "your_exa_api_key".to_string();
+    let api_key = "your_api_key";
     let client: ExaApiClient = ExaApiClient::new(api_key);
 }
  ```
@@ -58,7 +58,7 @@ The `ExaApiClient` utilizes builder patterns for constructing request parameters
 ```
 #[tokio::main]
 async fn main() {
-    let api_key = "".to_string();
+    let api_key = "your_api_key";
     let client: ExaApiClient = ExaApiClient::new(api_key);
 
 let  search_params = SearchParams::new("Mitski singer")
