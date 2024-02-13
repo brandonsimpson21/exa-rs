@@ -45,7 +45,7 @@ async fn main() {
 
 The `ExaApiClient` utilizes builder patterns for constructing request parameters for various API endpoints. Here is an overview of the available builders:
 
-| Function            | Builder                     | Description                                                   |
+| Function            | Function                     | Description                                                   |
 |---------------------|-----------------------------|---------------------------------------------------------------|
 | Search              | `SearchParams`       | Used to construct parameters for the search API endpoint.     |
 | Find Similar        | `FindSimilarParams`  | Used to construct parameters for the find similar API endpoint.|
