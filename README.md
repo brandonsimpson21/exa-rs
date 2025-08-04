@@ -50,8 +50,9 @@ The `ExaApiClient` utilizes builder patterns for constructing request parameters
 | Search              | `SearchParams`       | Used to construct parameters for the search API endpoint.     |
 | Find Similar        | `FindSimilarParams`  | Used to construct parameters for the find similar API endpoint.|
 | Get Contents        | `ContentsParams`     | Used to construct parameters for the get contents API endpoint.|
+| Answer        | `AnswerParams`     | Used to construct parameters for the answer API endpoint.|
 
-
+**streaming is not supported for now**
 
 ## Using search 
 
