@@ -1,6 +1,6 @@
 [package]
 name = "exa_api_client"
-version = "0.1.4"
+version = "0.1.5"
 edition = "2018"
 description = "A Rust client for interacting with the Exa/Metaphor systems API"
 license = "MIT"  
