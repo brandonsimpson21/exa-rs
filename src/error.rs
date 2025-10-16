@@ -1,5 +1,3 @@
-
-
 use reqwest::Error as ReqwestError;
 use thiserror::Error;
 

@@ -1,4 +1,4 @@
 mod api;
 mod error;
 
-pub use crate::api::{ExaApiClient,SearchParams,FindSimilarParams,ContentsParams};
+pub use crate::api::{ContentsParams, ExaApiClient, FindSimilarParams, SearchParams};

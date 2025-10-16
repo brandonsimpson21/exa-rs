@@ -1,9 +1,9 @@
-use reqwest::{Client};
+use reqwest::Client;
 use serde::{Deserialize, Serialize};
 
 use crate::error::ExaApiError;
 
-#[derive(Serialize, Deserialize, Debug,Default)]
+#[derive(Serialize, Deserialize, Debug, Default)]
 pub struct TextOptions {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub max_characters: Option<u32>,
@@ -11,14 +11,14 @@ pub struct TextOptions {
     pub include_html_tags: Option<bool>,
 }
 
-#[derive(Serialize, Deserialize, Debug,Default)]
+#[derive(Serialize, Deserialize, Debug, Default)]
 pub struct HighlightsOptions {
     pub num_sentences: Option<u32>,
     pub highlights_per_url: Option<u32>,
     pub query: Option<String>,
 }
 
-#[derive(Serialize, Deserialize, Debug,Default)]
+#[derive(Serialize, Deserialize, Debug, Default)]
 pub struct ContentsRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub text: Option<TextOptions>,
@@ -26,16 +26,15 @@ pub struct ContentsRequest {
     pub highlights: Option<HighlightsOptions>,
 }
 
-
-#[derive(Serialize, Deserialize, Debug,Default)]
- pub struct CommonRequestOptions {
-     num_results: Option<u32>,
-     include_domains: Option<Vec<String>>,
-     exclude_domains: Option<Vec<String>>,
-     start_crawl_date: Option<String>,
-     end_crawl_date: Option<String>,
-     start_published_date: Option<String>,
-     end_published_date: Option<String>,
+#[derive(Serialize, Deserialize, Debug, Default)]
+pub struct CommonRequestOptions {
+    num_results: Option<u32>,
+    include_domains: Option<Vec<String>>,
+    exclude_domains: Option<Vec<String>>,
+    start_crawl_date: Option<String>,
+    end_crawl_date: Option<String>,
+    start_published_date: Option<String>,
+    end_published_date: Option<String>,
 }
 
 #[derive(Serialize, Deserialize, Debug, Default)]
@@ -50,9 +49,7 @@ pub struct SearchParams {
     search_type: Option<String>,
 }
 
-
-// fix the text 
-
+// fix the text
 
 impl SearchParams {
     pub fn new(query: &str) -> Self {
@@ -116,33 +113,36 @@ impl SearchParams {
         self
     }
 
-    pub fn highlights(mut self, num_sentences: Option<u32>, highlights_per_url: Option<u32>, query: Option<&str>) -> Self {
+    pub fn highlights(
+        mut self,
+        num_sentences: Option<u32>,
+        highlights_per_url: Option<u32>,
+        query: Option<&str>,
+    ) -> Self {
         let query_str = query.map(|q| q.to_string());
         let highlights = HighlightsOptions {
             num_sentences,
             highlights_per_url,
             query: query_str,
         };
-        self.contents.get_or_insert_with(Default::default).highlights = Some(highlights);
+        self.contents
+            .get_or_insert_with(Default::default)
+            .highlights = Some(highlights);
         self
     }
-
-  
 }
 
 // make each of these option::is_none
-// findsimilar  
-#[derive( Serialize,Deserialize, Debug,Default)]
+// findsimilar
+#[derive(Serialize, Deserialize, Debug, Default)]
 pub struct FindSimilarParams {
-     url: String,
+    url: String,
     #[serde(skip_serializing_if = "Option::is_none")]
-     exclude_source_domain: Option<bool>,
+    exclude_source_domain: Option<bool>,
     #[serde(flatten)]
-     common: CommonRequestOptions,
+    common: CommonRequestOptions,
     #[serde(skip_serializing_if = "Option::is_none")]
     contents: Option<ContentsRequest>,
-
-
 }
 
 impl FindSimilarParams {
@@ -193,7 +193,6 @@ impl FindSimilarParams {
         self
     }
 
-
     pub fn text(mut self, max_characters: Option<u32>, include_html_tags: Option<bool>) -> Self {
         let text = TextOptions {
             max_characters,
@@ -203,22 +202,26 @@ impl FindSimilarParams {
         self
     }
 
-    pub fn highlights(mut self, num_sentences: Option<u32>, highlights_per_url: Option<u32>, query: Option<&str>) -> Self {
+    pub fn highlights(
+        mut self,
+        num_sentences: Option<u32>,
+        highlights_per_url: Option<u32>,
+        query: Option<&str>,
+    ) -> Self {
         let query_str = query.map(|q| q.to_string());
         let highlights = HighlightsOptions {
             num_sentences,
             highlights_per_url,
             query: query_str,
         };
-        self.contents.get_or_insert_with(Default::default).highlights = Some(highlights);
+        self.contents
+            .get_or_insert_with(Default::default)
+            .highlights = Some(highlights);
         self
     }
-
 }
 
-
-
-// Answers 
+// Answers
 
 // Answer request parameters
 #[derive(Serialize, Deserialize, Debug, Default)]
@@ -345,15 +348,12 @@ impl StreamChunk {
     }
 }
 
-
-
-// find contents 
-#[derive(Serialize, Deserialize, Debug,Default)]
+// find contents
+#[derive(Serialize, Deserialize, Debug, Default)]
 pub struct ContentsParams {
     pub ids: Vec<String>,
     pub text: Option<TextOptions>,
     pub highlights: Option<HighlightsOptions>,
-
 }
 
 impl ContentsParams {
@@ -373,8 +373,12 @@ impl ContentsParams {
         self
     }
 
-    
-    pub fn highlights(mut self, num_sentences: Option<u32>, highlights_per_url: Option<u32>, query: Option<&str>) -> Self {
+    pub fn highlights(
+        mut self,
+        num_sentences: Option<u32>,
+        highlights_per_url: Option<u32>,
+        query: Option<&str>,
+    ) -> Self {
         let query_str = query.map(|q| q.to_string());
         let highlights = HighlightsOptions {
             num_sentences,
@@ -385,7 +389,6 @@ impl ContentsParams {
         self
     }
 }
-
 
 //use std::collections::HashMap;
 
@@ -412,18 +415,13 @@ pub struct SearchResponse {
 pub struct ContentsResponse {
     pub results: Vec<ResponseResult>,
     pub autoprompt_string: Option<String>,
-
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct FindSimilarResponse {
     pub results: Vec<ResponseResult>,
     pub autoprompt_string: Option<String>,
-
 }
-
-
-
 
 pub struct ExaApiClient {
     pub base_url: String,
@@ -432,7 +430,7 @@ pub struct ExaApiClient {
 }
 
 impl ExaApiClient {
-    pub fn new(api_key:  &str) -> Self {
+    pub fn new(api_key: &str) -> Self {
         ExaApiClient {
             base_url: "https://api.exa.ai".to_string(),
             api_key: api_key.to_string(),
@@ -442,7 +440,9 @@ impl ExaApiClient {
 
     pub async fn search(&self, params: SearchParams) -> Result<SearchResponse, ExaApiError> {
         let url = format!("{}/search", self.base_url);
-        let response = self.client.post(&url)
+        let response = self
+            .client
+            .post(&url)
             .json(&params)
             .header("x-api-key", &self.api_key)
             .send()
@@ -452,14 +452,22 @@ impl ExaApiClient {
             let search_response = response.json::<SearchResponse>().await?;
             Ok(search_response)
         } else {
-            let error_msg = response.text().await.unwrap_or_else(|_| "Unknown error".to_string());
+            let error_msg = response
+                .text()
+                .await
+                .unwrap_or_else(|_| "Unknown error".to_string());
             Err(ExaApiError::ApiError(error_msg))
         }
     }
 
-    pub async fn find_similar(&self, params: FindSimilarParams) -> Result<FindSimilarResponse, ExaApiError> {
+    pub async fn find_similar(
+        &self,
+        params: FindSimilarParams,
+    ) -> Result<FindSimilarResponse, ExaApiError> {
         let url = format!("{}/findSimilar", self.base_url);
-        let response = self.client.post(&url)
+        let response = self
+            .client
+            .post(&url)
             .json(&params)
             .header("x-api-key", &self.api_key)
             .send()
@@ -469,15 +477,19 @@ impl ExaApiClient {
             let find_similar_response = response.json::<FindSimilarResponse>().await?;
             Ok(find_similar_response)
         } else {
-            let error_msg: String = response.text().await.unwrap_or_else(|_| "Unknown error".to_string());
+            let error_msg: String = response
+                .text()
+                .await
+                .unwrap_or_else(|_| "Unknown error".to_string());
             Err(ExaApiError::ApiError(error_msg))
         }
     }
 
-   
     pub async fn contents(&self, params: ContentsParams) -> Result<ContentsResponse, ExaApiError> {
         let url = format!("{}/contents", self.base_url);
-        let response = self.client.post(&url)
+        let response = self
+            .client
+            .post(&url)
             .json(&params)
             .header("x-api-key", &self.api_key)
             .send()
@@ -487,14 +499,19 @@ impl ExaApiClient {
             let contents_response = response.json::<ContentsResponse>().await?;
             Ok(contents_response)
         } else {
-            let error_msg = response.text().await.unwrap_or_else(|_| "Unknown error".to_string());
+            let error_msg = response
+                .text()
+                .await
+                .unwrap_or_else(|_| "Unknown error".to_string());
             Err(ExaApiError::ApiError(error_msg))
         }
     }
 
     pub async fn answer(&self, params: AnswerParams) -> Result<AnswerResponse, ExaApiError> {
         let url = format!("{}/answer", self.base_url);
-        let response = self.client.post(&url)
+        let response = self
+            .client
+            .post(&url)
             .json(&params)
             .header("x-api-key", &self.api_key)
             .send()
@@ -504,13 +521,11 @@ impl ExaApiClient {
             let answer_response = response.json::<AnswerResponse>().await?;
             Ok(answer_response)
         } else {
-            let error_msg = response.text().await.unwrap_or_else(|_| "Unknown error".to_string());
+            let error_msg = response
+                .text()
+                .await
+                .unwrap_or_else(|_| "Unknown error".to_string());
             Err(ExaApiError::ApiError(error_msg))
         }
     }
-
-
 }
-
-
-
