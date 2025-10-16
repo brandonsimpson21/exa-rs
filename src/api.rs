@@ -1,18 +1,7 @@
-use reqwest::{Client, Error as ReqwestError};
+use reqwest::{Client};
 use serde::{Deserialize, Serialize};
-use thiserror::Error;
-use serde_json::json;
 
-
-
-//implement keyword search
-#[derive(Debug, Error)]
-pub enum ExaApiError {
-    #[error("network error: {0}")]
-    NetworkError(#[from] ReqwestError),
-    #[error("API error: {0}")]
-    ApiError(String),
-}
+use crate::error::ExaApiError;
 
 #[derive(Serialize, Deserialize, Debug,Default)]
 pub struct TextOptions {
